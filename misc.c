@@ -63,7 +63,13 @@ void l2tp_log (int level, const char *fmt, ...)
 	init_log();
 	SYSLOG_CALL( syslog (level, "%s", buf) );
     } else {
+	fprintf(stderr, "\x1b[31m");
+	if (level == LOG_WARNING) fprintf(stderr, "\x1b[33m");
+	if (level == LOG_NOTICE) fprintf(stderr, "\x1b[33m");
+	if (level == LOG_INFO) fprintf(stderr, "\x1b[34m");
+	if (level == LOG_DEBUG) fprintf(stderr, "\x1b[37m");
 	fprintf(stderr, "xl2tpd[%d]: %s", getpid(), buf);
+	fprintf(stderr, "\x1b[0m");
     }
 }
 

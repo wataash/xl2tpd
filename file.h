@@ -49,6 +49,10 @@ struct host
 #define SENSE_ALLOW -1
 #define SENSE_DENY 0
 
+// #define DEFAULT_AUTH_FILE "/home/wsh/usr/etc/xl2tpd/l2tp-secrets"
+// #define DEFAULT_CONFIG_FILE "/home/wsh/usr/etc/xl2tpd/xl2tpd.conf"
+// #define DEFAULT_PID_FILE "/home/wsh/usr/var/run/xl2tpd.pid"
+
 #ifndef DEFAULT_AUTH_FILE
 #define DEFAULT_AUTH_FILE "/etc/xl2tpd/l2tp-secrets"
 #endif
@@ -59,6 +63,7 @@ struct host
 #define ALT_DEFAULT_CONFIG_FILE "/etc/l2tp/l2tpd.conf"
 #define DEFAULT_PID_FILE "/var/run/xl2tpd.pid"
 
+// L2TP Network Server
 /* Definition of an LNS */
 struct lns
 {
@@ -101,6 +106,7 @@ struct lns
     struct tunnel *t;           /* Tunnel of this, if it's ready */
 };
 
+// L2TP Access Concentrator
 struct lac
 {
     struct lac *next;
@@ -162,6 +168,7 @@ struct global
     int debug_network;		/* Print network debugging info? */
     int debug_tunnel;		/* Print tunnel debugging info? */
     int debug_state;		/* Print FSM debugging info? */
+    // IPSec Security Association Reference?
     int ipsecsaref;
     int sarefnum;		/* Value of IPSEC_REFINFO used by kernel
 				 * (we used to pick 22, but 2.6.36+ took that, so now we pick 30)

@@ -54,7 +54,9 @@ int init_network (void)
     };
 
     flags = 1;
+    // why?
     setsockopt(server_socket, SOL_SOCKET, SO_REUSEADDR, &flags, sizeof(flags));
+    // why?
 #ifdef SO_NO_CHECK
     setsockopt(server_socket, SOL_SOCKET, SO_NO_CHECK, &flags, sizeof(flags));
 #endif
@@ -66,6 +68,7 @@ int init_network (void)
              __FUNCTION__, strerror(errno), errno);
         return -EINVAL;
     };
+    // necessary?
     if (getsockname (server_socket, (struct sockaddr *) &server, &length))
     {
         close (server_socket);
@@ -85,6 +88,8 @@ int init_network (void)
     }
     else
     {
+        // [global] ipsec saref = yes
+        //   see xl2tpd.conf(5): ipsec saref
         arg=1;
         if(setsockopt(server_socket, IPPROTO_IP, gconfig.sarefnum, &arg, sizeof(arg)) != 0 && !gconfig.forceuserspace)
         {
@@ -104,6 +109,7 @@ int init_network (void)
 #ifdef USE_KERNEL
     if (gconfig.forceuserspace)
     {
+        // [global] force userspace = yes
         l2tp_log (LOG_INFO, "Not looking for kernel support.\n");
         kernel_support = 0;
     }

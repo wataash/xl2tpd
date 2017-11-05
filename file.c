@@ -56,6 +56,16 @@ int init_config ()
     laclist = NULL;
     deflac = (struct lac *) calloc (1, sizeof (struct lac));
 
+#ifdef DEBUG_FILE
+    l2tp_log(LOG_DEBUG, "authfile       File containing authentication info  /etc/xl2tpd/l2tp-secrets      %s\n", gconfig.authfile);
+    l2tp_log(LOG_DEBUG, "altauthfile    File containing authentication info  /etc/l2tpd/l2tp-secrets       %s\n", gconfig.altauthfile);
+    l2tp_log(LOG_DEBUG, "configfile     File containing configuration info   /etc/xl2tpd/xl2tpd.conf       %s\n", gconfig.configfile);
+    l2tp_log(LOG_DEBUG, "altconfigfile  File containing configuration info   /etc/l2tp/l2tpd.conf          %s\n", gconfig.altconfigfile);
+    l2tp_log(LOG_DEBUG, "pidfile        File containing the pid numbe        /var/run/xl2tpd.pid           %s\n", gconfig.pidfile);
+    l2tp_log(LOG_DEBUG, "controlfile    Control file name (named pipe)       /var/run/xl2tpd/l2tp-control  %s\n", gconfig.controlfile);
+    l2tp_log(LOG_DEBUG, "controltos     Control TOS value                                                  %s\n", gconfig.controltos);
+#endif
+
     f = fopen (gconfig.configfile, "r");
     if (!f) 
     {
@@ -1334,8 +1344,10 @@ int parse_config (FILE * f)
     /* FIXME: I should check for incompatible options */
     int context = 0;
     char buf[1024]; 
+    // start, delimiter, end
     char *s, *d, *t;
     int linenum = 0;
+    // default
     int def = 0;
     int in_comment = 0;
     int has_lf;
@@ -1363,6 +1375,7 @@ int parse_config (FILE * f)
             s++;
         if (*s == ';' && !has_lf)
             in_comment = 1;
+        // '\0'
         *s = 0;
         s = buf;
         if (!strlen (buf))

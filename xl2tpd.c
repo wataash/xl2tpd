@@ -214,6 +214,7 @@ static void null_handler(int sig)
         * A sighup is received when a call is terminated, unknown origine ..
         * I catch it and ll looks good, but ..
         */
+        asm("nop");
 }
 
 static void status_handler (int sig)
@@ -1785,6 +1786,7 @@ static void consider_pidfile() {
     /* Read previous pid file. */
     i = open(gconfig.pidfile,O_RDONLY);
     if (i < 0) {
+        // ENOPERM もここに入っちゃうだろうな
         /* l2tp_log(LOG_DEBUG, "%s: Unable to read pid file [%s]\n",
            __FUNCTION__, gconfig.pidfile);
          */
@@ -1902,6 +1904,8 @@ static void init (int argc,char *argv[])
     {
         if (lac->autodial)
         {
+            // [lac] autodial = yes
+            // TODO
 #ifdef DEBUG_MAGIC
             l2tp_log (LOG_DEBUG, "%s: Autodialing '%s'\n", __FUNCTION__,
                     lac->entname[0] ? lac->entname : "(unnamed)");

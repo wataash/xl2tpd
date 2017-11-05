@@ -39,6 +39,7 @@ typedef unsigned long long _u64;
 #include "common.h"
 #include "ipsecmast.h"
 
+// #define CONTROL_PIPE "/home/wsh/usr/var/run/xl2tpd/l2tp-control"
 #define CONTROL_PIPE "/var/run/xl2tpd/l2tp-control"
 #define CONTROL_PIPE_MESSAGE_SIZE 1024
 #define UNUSED(x) (void)(x)
